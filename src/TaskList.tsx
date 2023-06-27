@@ -1,15 +1,33 @@
+import { useFilter } from './FilterContext'
 import { Task } from './Task'
+import { useTasks, useTasksDispatch } from './TasksContext'
 
-type Props = any
-export function TaskList({
-  tasks,
-  handleCompleteTask,
-  handleUncompleteTask,
-  handleDeleteTask,
-}: Props) {
+export function TaskList() {
+  const tasks = useTasks()
+  const dispatch = useTasksDispatch()
+  const filter = useFilter()
+
+  const filteredTasks = tasks.filter((task: any) => {
+    if (filter === 'completed') return task.completed
+    if (filter === 'notcompleted') return !task.completed
+    if (filter === 'all') return true
+  })
+
+  const handleCompleteTask = (task: any) => {
+    dispatch({type: 'taskCompleted', task})
+  }
+
+  const handleUncompleteTask = (task: any) => {
+    dispatch({type: 'taskUncompleted', task})
+  }
+
+  const handleDeleteTask = (task: any) => {
+    dispatch({type: 'taskDeleted', task})
+  }
+
   return (
     <ul className="TaskList">
-      {tasks.map((task: any) => (
+      {filteredTasks.map((task: any) => (
         <Task
           onComplete={handleCompleteTask}
           onUncomplete={handleUncompleteTask}

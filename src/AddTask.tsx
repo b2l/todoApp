@@ -1,12 +1,14 @@
 import { useId, useState } from 'react'
+import { useTasksDispatch } from './TasksContext'
 
-export function AddTask({onAddTask}: {onAddTask: any}) {
+export function AddTask() {
+  const dispatch = useTasksDispatch()
   const [taskTitle, setTaskTitle] = useState('')
   const inputId = useId()
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    onAddTask(taskTitle)
+    dispatch({ type: 'taskAdded', taskTitle })
     setTaskTitle('')
   }
   return (
@@ -18,7 +20,7 @@ export function AddTask({onAddTask}: {onAddTask: any}) {
         id={inputId}
         placeholder="Try typing prepare the formation"
         value={taskTitle}
-        onChange={e => setTaskTitle(e.target.value)}
+        onChange={(e) => setTaskTitle(e.target.value)}
       />
     </form>
   )
