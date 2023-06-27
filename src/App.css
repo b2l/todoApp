@@ -37,6 +37,11 @@ body {
   color: var(--accent-color);
 }
 
+.App-Nav .Link.active {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
 .App-Body {
   display: flex;
   flex: 1;
