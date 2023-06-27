@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { filterChanged, filters } from './FilterContext'
+import { getFilter } from './selectors'
 
 export function Nav() {
-  const filter = useSelector((state: any) => state.filter)
+  const filter = useSelector(getFilter)
   const dispatch = useDispatch()
 
   const handleFilterChange = (newFilter: any) => (e: any) => {
