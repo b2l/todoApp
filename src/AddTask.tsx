@@ -13,7 +13,7 @@ export function AddTask() {
     setTaskTitle('')
   }
   return (
-    <form className="" onSubmit={handleSubmit}>
+    <form aria-label="addTaksForm" onSubmit={handleSubmit}>
       <label htmlFor={inputId}>+ Add a task</label>
       <input
         type="text"

@@ -1,12 +1,8 @@
 import { useId } from 'react'
 import { useDispatch } from 'react-redux'
 import { Checkbox } from './Checkbox'
-import {
-  Task,
-  taskCompleted,
-  taskDeleted,
-  taskUncompleted,
-} from './TasksContext'
+import { taskCompleted, taskDeleted, taskUncompleted } from './TasksContext'
+import type { Task } from './TasksContext'
 
 interface Props {
   task: Task
