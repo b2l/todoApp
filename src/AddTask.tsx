@@ -1,14 +1,15 @@
 import { useId, useState } from 'react'
-import { useTasksDispatch } from './TasksContext'
+import { useDispatch } from 'react-redux'
+import { taskAdded } from './TasksContext'
 
 export function AddTask() {
-  const dispatch = useTasksDispatch()
+  const dispatch = useDispatch()
   const [taskTitle, setTaskTitle] = useState('')
   const inputId = useId()
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    dispatch({ type: 'taskAdded', taskTitle })
+    dispatch(taskAdded(taskTitle))
     setTaskTitle('')
   }
   return (

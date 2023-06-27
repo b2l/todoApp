@@ -1,11 +1,11 @@
-import { useFilter } from './FilterContext'
+import { useDispatch, useSelector } from 'react-redux'
 import { Task } from './Task'
-import { useTasks, useTasksDispatch } from './TasksContext'
+import { taskCompleted, taskUncompleted, taskDeleted } from './TasksContext'
 
 export function TaskList() {
-  const tasks = useTasks()
-  const dispatch = useTasksDispatch()
-  const filter = useFilter()
+  const tasks = useSelector((state: any) => state.tasks)
+  const dispatch = useDispatch()
+  const filter = useSelector((state: any) => state.filter)
 
   const filteredTasks = tasks.filter((task: any) => {
     if (filter === 'completed') return task.completed
@@ -14,15 +14,15 @@ export function TaskList() {
   })
 
   const handleCompleteTask = (task: any) => {
-    dispatch({type: 'taskCompleted', task})
+    dispatch(taskCompleted(task))
   }
 
   const handleUncompleteTask = (task: any) => {
-    dispatch({type: 'taskUncompleted', task})
+    dispatch(taskUncompleted(task))
   }
 
   const handleDeleteTask = (task: any) => {
-    dispatch({type: 'taskDeleted', task})
+    dispatch(taskDeleted(task))
   }
 
   return (

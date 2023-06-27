@@ -1,56 +1,36 @@
-import { createContext, useContext, useReducer } from "react";
+import { createSlice } from '@reduxjs/toolkit'
 
-export const TasksContext = createContext([])
-export const TasksDispatchContext = createContext<any>(null)
-
-export function TasksProvider({children}: any) {
-  const [tasks, dispatch] = useReducer(reducer, initialTasks)
-
-  return (
-    <TasksContext.Provider value={tasks}>
-      <TasksDispatchContext.Provider value={dispatch}>
-        {children}
-      </TasksDispatchContext.Provider>
-    </TasksContext.Provider>
-  )
-}
-
-export function useTasks() {
-  return useContext(TasksContext)
-}
-
-export function useTasksDispatch() {
-  return useContext(TasksDispatchContext)
-}
-
-
-const initialTasks = [
+const initialState = [
   { id: 1, title: 'task one', completed: false },
   { id: 2, title: 'task two', completed: false },
   { id: 3, title: 'task three', completed: false },
   { id: 4, title: 'task for', completed: true },
 ]
 
-function reducer(tasks: any, action: any) {
-  switch (action.type) {
-    case 'taskAdded': {
-      return [
-        ...tasks,
-        {
-          id: tasks[tasks.length - 1].id + 1,
-          title: action.taskTitle,
-          completed: false,
-        },
-      ]
-    }
-    case 'taskDeleted': {
-      return tasks.filter((t: any) => t !== action.task)
-    }
-    case 'taskCompleted': {
-      return tasks.map((t: any) => (t === action.task ? { ...t, completed: true } : t))
-    }
-    case 'taskUncompleted': {
-      return tasks.map((t: any) => (t === action.task ? { ...t, completed: false } : t))
-    }
-  }
-}
+export const tasksSlice = createSlice({
+  name: 'tasks',
+  initialState,
+  reducers: {
+    taskAdded: (state, action) => {
+      return action.payload
+    },
+    taskDeleted: (state, action) => {
+      return state.filter((task) => task !== action.payload)
+    },
+    taskCompleted: (state, action) => {
+      return state.map((task: any) =>
+        task === action.payload ? { ...task, completed: true } : task
+      )
+    },
+    taskUncompleted: (state, action) => {
+      return state.map((t: any) =>
+        t === action.payload ? { ...t, completed: false } : t
+      )
+    },
+  },
+})
+
+// Action creators are generated for each case reducer function
+export const { taskAdded, taskCompleted, taskDeleted, taskUncompleted } = tasksSlice.actions
+
+export default tasksSlice.reducer

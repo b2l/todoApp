@@ -1,12 +1,13 @@
-import { filters, useFilter, useFilterDispatch } from './FilterContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { filterChanged, filters } from './FilterContext'
 
 export function Nav() {
-  const filter = useFilter()
-  const dispatch = useFilterDispatch()
+  const filter = useSelector((state: any) => state.filter)
+  const dispatch = useDispatch()
 
   const handleFilterChange = (newFilter: any) => (e: any) => {
     e.preventDefault()
-    dispatch({ type: 'filterChanged', filter: newFilter })
+    dispatch(filterChanged(newFilter))
   }
 
   return (
