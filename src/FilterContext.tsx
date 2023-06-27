@@ -1,12 +1,13 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const initialState = 'all'
+type State = 'all' | 'completed' | 'notcompleted'
+const initialState = 'all' as State
 
 export const filterSlice = createSlice({
   name: 'filter',
   initialState,
   reducers: {
-    filterChanged: (state, action) => {
+    filterChanged: (state, action: PayloadAction<State>) => {
       return action.payload
     },
   },

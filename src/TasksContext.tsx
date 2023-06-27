@@ -1,27 +1,29 @@
 import { PayloadAction, PrepareAction, createSlice, nanoid } from '@reduxjs/toolkit'
 
+export interface Task {
+  id: string
+  title: string
+  completed: boolean
+}
+
+type State = Task[]
+
 const initialState = [
   { id: nanoid(), title: 'task one', completed: false },
   { id: nanoid(), title: 'task two', completed: false },
   { id: nanoid(), title: 'task three', completed: false },
   { id: nanoid(), title: 'task for', completed: true },
-]
-
-interface Task {
-  id: string
-  title: string
-  completed: boolean
-}
+] as State
 
 export const tasksSlice = createSlice({
   name: 'tasks',
   initialState,
   reducers: {
     taskAdded: {
-      reducer(state, action: any) {
+      reducer(state, action: PayloadAction<Task>) {
         state.push(action.payload)
       },
-      prepare: (title: any) => {
+      prepare: (title: string) => {
         const id = nanoid()
         return {
           payload: {
@@ -32,15 +34,15 @@ export const tasksSlice = createSlice({
         }
       },
     },
-    taskDeleted: (state, action) => {
+    taskDeleted: (state, action: PayloadAction<Task>) => {
       return state.filter((task) => task !== action.payload)
     },
-    taskCompleted: (state, action) => {
+    taskCompleted: (state, action: PayloadAction<Task>) => {
       return state.map((task: any) =>
         task === action.payload ? { ...task, completed: true } : task
       )
     },
-    taskUncompleted: (state, action) => {
+    taskUncompleted: (state, action: PayloadAction<Task>) => {
       return state.map((t: any) =>
         t === action.payload ? { ...t, completed: false } : t
       )

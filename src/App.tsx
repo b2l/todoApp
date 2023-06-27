@@ -12,7 +12,7 @@ function App() {
         <header className="App-Header">
           <h1>TodoApp</h1>
         </header>
-        <Nav></Nav>
+        <Nav />
         <main className="App-Body">
           <AddTask />
           <TaskList />
